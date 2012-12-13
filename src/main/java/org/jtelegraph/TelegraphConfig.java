@@ -89,6 +89,16 @@ public class TelegraphConfig {
 	private int windowWidth;
 	private int windowHeight;
 
+	private TelegraphButtonAction buttonAction;
+
+	public void setButtonAction(final TelegraphButtonAction action) {
+		buttonAction = action;
+	}
+
+	public TelegraphButtonAction getButtonAction() {
+		return buttonAction;
+	}
+
 	// Getters and setters
 
 	public boolean hasToStopOnMouseOver() {

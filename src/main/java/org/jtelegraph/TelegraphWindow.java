@@ -201,6 +201,9 @@ public class TelegraphWindow extends JWindow {
 					// disable the button
 					button.setEnabled(false);
 
+					if (config.getButtonAction() != null)
+						config.getButtonAction().doSomething();
+
 					// play animation
 
 					timeline.play();
