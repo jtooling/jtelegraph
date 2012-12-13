@@ -60,6 +60,7 @@ import org.pushingpixels.trident.Timeline;
  * @version 2.0
  * @since 2.0
  */
+@SuppressWarnings("serial")
 public class TelegraphWindow extends JWindow {
 
 	// the configuration
