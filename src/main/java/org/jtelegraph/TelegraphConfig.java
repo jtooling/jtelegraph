@@ -62,7 +62,7 @@ public class TelegraphConfig {
 	private Color descriptionColor;
 	private ImageIcon backgroundImage;
 	private Color backgroundColor;
-	private TelegraphType icon;
+	private IconProvider iconProvider;
 	private Color borderColor;
 	private int borderThickness;
 	private long inDuration;
@@ -173,7 +173,7 @@ public class TelegraphConfig {
 		descriptionColor = Color.BLACK;
 		backgroundColor = Color.WHITE;
 		backgroundImage = null;
-		icon = TelegraphType.MESSAGE;
+		iconProvider = SimplicioIconProvider.MESSAGE;
 		borderColor = Color.BLACK;
 		borderThickness = 2;
 		inDuration = 250;
@@ -248,12 +248,11 @@ public class TelegraphConfig {
 	}
 
 	public ImageIcon getIcon() {
-		return new ImageIcon(getClass().getResource(
-				"/simplicio/" + icon.toString().toLowerCase() + ".png"));
+		return iconProvider.getIcon();
 	}
 
-	public void setIcon(final TelegraphType icon) {
-		this.icon = icon;
+	public void setIconProvider(final IconProvider iconProvider) {
+		this.iconProvider = iconProvider;
 	}
 
 	public Color getTitleColor() {
