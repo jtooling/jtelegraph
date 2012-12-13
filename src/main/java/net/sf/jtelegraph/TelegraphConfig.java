@@ -38,335 +38,345 @@
 package net.sf.jtelegraph;
 
 // needed packages
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.Rectangle;
+
 import javax.swing.ImageIcon;
 
 /**
  * Holds the telegraph configuration.
+ * 
  * @author Paulo Roberto Massa Cereda
  * @version 2.0
  * @since 2.0
  */
 public class TelegraphConfig {
-    
-    // lots of configurations
-    private Font titleFont;
-    private Font descriptionFont;
-    private Color titleColor;
-    private Color descriptionColor;
-    private ImageIcon backgroundImage;
-    private Color backgroundColor;
-    private TelegraphType icon;
-    private Color borderColor;
-    private int borderThickness;
-    private long inDuration;
-    private long outDuration;
-    private long duration;
-    private boolean enableButton;
-    private String buttonCaption;
-    private ImageIcon buttonIcon;
-    private boolean stopOnMouseOver;
-        
-    // distance from screen
-    private int distanceFromScreen;
-    
-    // the animation position
-    private TelegraphPosition telegraphPosition;
-    
-    // the screen size
-    private double screenWidth;
-    private double screenHeight;
-    
-    
-    // the window size
-    private int windowWidth;
-    private int windowHeight;
 
-    // Getters and setters
+	// lots of configurations
+	private Font titleFont;
+	private Font descriptionFont;
+	private Color titleColor;
+	private Color descriptionColor;
+	private ImageIcon backgroundImage;
+	private Color backgroundColor;
+	private TelegraphType icon;
+	private Color borderColor;
+	private int borderThickness;
+	private long inDuration;
+	private long outDuration;
+	private long duration;
+	private boolean enableButton;
+	private String buttonCaption;
+	private ImageIcon buttonIcon;
+	private boolean stopOnMouseOver;
 
-    public boolean hasToStopOnMouseOver() {
-        return stopOnMouseOver;
-    }
+	// distance from screen
+	private int distanceFromScreen;
 
-    public void setStopOnMouseOver(boolean stopOnMouseOver) {
-        this.stopOnMouseOver = stopOnMouseOver;
-    }
-    
-    public String getButtonCaption() {
-        return buttonCaption;
-    }
+	// the animation position
+	private TelegraphPosition telegraphPosition;
 
-    public void setButtonCaption(String buttonCaption) {
-        this.buttonCaption = buttonCaption;
-    }
+	// the screen size
+	private double screenWidth;
+	private double screenHeight;
 
-    public boolean hasEnableButton() {
-        return enableButton;
-    }
+	// the window size
+	private int windowWidth;
+	private int windowHeight;
 
-    public void enableButton(boolean enableButton) {
-        this.enableButton = enableButton;
-    }
+	// Getters and setters
 
-    public ImageIcon getButtonIcon() {
-        return buttonIcon;
-    }
+	public boolean hasToStopOnMouseOver() {
+		return stopOnMouseOver;
+	}
 
-    public void setButtonIcon(ImageIcon buttonIcon) {
-        this.buttonIcon = buttonIcon;
-    }
-    
-    protected void setWindowHeight(int windowHeight) {
-        this.windowHeight = windowHeight;
-    }
+	public void setStopOnMouseOver(final boolean stopOnMouseOver) {
+		this.stopOnMouseOver = stopOnMouseOver;
+	}
 
-    protected void setWindowWidth(int windowWidth) {
-        this.windowWidth = windowWidth;
-    } 
+	public String getButtonCaption() {
+		return buttonCaption;
+	}
 
-    public void setTelegraphPosition(TelegraphPosition telegraphPosition) {
-        this.telegraphPosition = telegraphPosition;
-    }
+	public void setButtonCaption(final String buttonCaption) {
+		this.buttonCaption = buttonCaption;
+	}
 
-    public void setDistanceFromScreen(int distanceFromScreen) {
-        this.distanceFromScreen = distanceFromScreen;
-    }   
+	public boolean hasEnableButton() {
+		return enableButton;
+	}
 
-    public long getDuration() {
-        return duration;
-    }
+	public void enableButton(final boolean enableButton) {
+		this.enableButton = enableButton;
+	}
 
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
+	public ImageIcon getButtonIcon() {
+		return buttonIcon;
+	}
 
-    public long getInDuration() {
-        return inDuration;
-    }
+	public void setButtonIcon(final ImageIcon buttonIcon) {
+		this.buttonIcon = buttonIcon;
+	}
 
-    public void setInDuration(long inDuration) {
-        this.inDuration = inDuration;
-    }
+	protected void setWindowHeight(final int windowHeight) {
+		this.windowHeight = windowHeight;
+	}
 
-    public long getOutDuration() {
-        return outDuration;
-    }
+	protected void setWindowWidth(final int windowWidth) {
+		this.windowWidth = windowWidth;
+	}
 
-    public void setOutDuration(long outDuration) {
-        this.outDuration = outDuration;
-    }
-    
-    /**
-     * Default constructor.
-     */
-    public TelegraphConfig() {
-        
-        // set everything
-        titleFont = null;
-        descriptionFont = null;
-        titleColor = Color.BLACK;
-        descriptionColor = Color.BLACK;
-        backgroundColor = Color.WHITE;
-        backgroundImage = null;
-        icon = TelegraphType.MESSAGE;
-        borderColor = Color.BLACK;
-        borderThickness = 2;
-        inDuration = 250;
-        outDuration = 250;
-        duration = 2000;
-        distanceFromScreen = 20;
-        telegraphPosition = TelegraphPosition.TOP_LEFT;
-        enableButton = false;
-        buttonCaption = "OK";
-        buttonIcon = null;
-        stopOnMouseOver = false;
-        
-        {
-            // get the screen size
-            Rectangle rect = getScreenResolution();
-            
-            // set it
-            screenWidth = rect.getWidth();
-            screenHeight = rect.getHeight();
-        }
-        
-    }  
-    
-    // Getters and setters
-    
-    public Color getBackgroundColor() {
-        return backgroundColor;
-    }
+	public void setTelegraphPosition(final TelegraphPosition telegraphPosition) {
+		this.telegraphPosition = telegraphPosition;
+	}
 
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
+	public void setDistanceFromScreen(final int distanceFromScreen) {
+		this.distanceFromScreen = distanceFromScreen;
+	}
 
-    public ImageIcon getBackgroundImage() {
-        return backgroundImage;
-    }
+	public long getDuration() {
+		return duration;
+	}
 
-    public void setBackgroundImage(ImageIcon backgroundImage) {
-        this.backgroundImage = backgroundImage;
-    }
+	public void setDuration(final long duration) {
+		this.duration = duration;
+	}
 
-    public Color getBorderColor() {
-        return borderColor;
-    }
+	public long getInDuration() {
+		return inDuration;
+	}
 
-    public void setBorderColor(Color borderColor) {
-        this.borderColor = borderColor;
-    }
+	public void setInDuration(final long inDuration) {
+		this.inDuration = inDuration;
+	}
 
-    public int getBorderThickness() {
-        return borderThickness;
-    }
+	public long getOutDuration() {
+		return outDuration;
+	}
 
-    public void setBorderThickness(int borderThickness) {
-        this.borderThickness = borderThickness;
-    }
+	public void setOutDuration(final long outDuration) {
+		this.outDuration = outDuration;
+	}
 
-    public Color getDescriptionColor() {
-        return descriptionColor;
-    }
+	/**
+	 * Default constructor.
+	 */
+	public TelegraphConfig() {
 
-    public void setDescriptionColor(Color descriptionColor) {
-        this.descriptionColor = descriptionColor;
-    }
+		// set everything
+		titleFont = null;
+		descriptionFont = null;
+		titleColor = Color.BLACK;
+		descriptionColor = Color.BLACK;
+		backgroundColor = Color.WHITE;
+		backgroundImage = null;
+		icon = TelegraphType.MESSAGE;
+		borderColor = Color.BLACK;
+		borderThickness = 2;
+		inDuration = 250;
+		outDuration = 250;
+		duration = 2000;
+		distanceFromScreen = 20;
+		telegraphPosition = TelegraphPosition.TOP_LEFT;
+		enableButton = false;
+		buttonCaption = "OK";
+		buttonIcon = null;
+		stopOnMouseOver = false;
 
-    public Font getDescriptionFont() {
-        return descriptionFont;
-    }
+		{
+			// get the screen size
+			final Rectangle rect = getScreenResolution();
 
-    public void setDescriptionFont(Font descriptionFont) {
-        this.descriptionFont = descriptionFont;
-    }
+			// set it
+			screenWidth = rect.getWidth();
+			screenHeight = rect.getHeight();
+		}
 
-    public ImageIcon getIcon() {
-        return new ImageIcon(getClass().getResource("/net/sf/jtelegraph/images/" + icon.toString().toLowerCase() + ".png"));
-    }
+	}
 
-    public void setIcon(TelegraphType icon) {
-        this.icon = icon;
-    }
+	// Getters and setters
 
-    public Color getTitleColor() {
-        return titleColor;
-    }
+	public Color getBackgroundColor() {
+		return backgroundColor;
+	}
 
-    public void setTitleColor(Color titleColor) {
-        this.titleColor = titleColor;
-    }
+	public void setBackgroundColor(final Color backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}
 
-    public Font getTitleFont() {
-        return titleFont;
-    }
+	public ImageIcon getBackgroundImage() {
+		return backgroundImage;
+	}
 
-    public void setTitleFont(Font titleFont) {
-        this.titleFont = titleFont;
-    }
-    
-    /**
-     * Calculates the initial coordinates.
-     * @return A point.
-     */
-    protected Point getInitialCoordinates() {
-        
-        // the points
-        int positionX;
-        int positionY;
-        
-        // check the option
-        switch (telegraphPosition) {
-            case BOTTOM_CENTER:
-                positionX = (int) ((screenWidth / 2) - (windowWidth / 2));
-                positionY = (int) (screenHeight + windowHeight);
-                break;
-            case TOP_CENTER:
-                positionX = (int) ((screenWidth / 2) - (windowWidth / 2));
-                positionY = (int) (-windowHeight);
-                break;
-            case TOP_LEFT:
-                positionX = (int) (-windowWidth);
-                positionY = (int) (-windowHeight);
-                break;
-            case BOTTOM_LEFT:
-                positionX = (int) (-windowWidth);
-                positionY = (int) (screenHeight);
-                break;
-            case TOP_RIGHT:
-                positionX = (int) (screenWidth);
-                positionY = (int) (-windowHeight);
-                break;
-            case BOTTOM_RIGHT:
-                positionX = (int) (screenWidth);
-                positionY = (int) (screenHeight + windowHeight);
-                break;
-            default:
-                    positionX = 0;
-                    positionY = 0;
-        }
-        
-        // return new point
-        return new Point(positionX, positionY);
-    }
-    
-    /**
-     * Calculates the final coordinates.
-     * @return The point.
-     */
-    protected Point getFinalCoordinates() {
-        
-        // the points
-        int positionX;
-        int positionY;
-        
-        // check the option
-        switch (telegraphPosition) {
-            case BOTTOM_CENTER:
-                positionX = (int) ((screenWidth / 2) - (windowWidth / 2));
-                positionY = (int) ((screenHeight - windowHeight) - distanceFromScreen);
-                break;
-            case TOP_CENTER:
-                positionX = (int) ((screenWidth / 2) - (windowWidth / 2));
-                positionY = (int) (distanceFromScreen);
-                break;
-            case TOP_LEFT:
-                positionX = (int) (distanceFromScreen);
-                positionY = (int) (distanceFromScreen);
-                break;
-            case BOTTOM_LEFT:
-                positionX = (int) (distanceFromScreen);
-                positionY = (int) ((screenHeight - windowHeight) - distanceFromScreen);
-                break;
-            case TOP_RIGHT:
-                positionX = (int) ((screenWidth - windowWidth) - distanceFromScreen);
-                positionY = (int) (distanceFromScreen);
-                break;
-            case BOTTOM_RIGHT:
-                positionX = (int) ((screenWidth - windowWidth) - distanceFromScreen);
-                positionY = (int) ((screenHeight - windowHeight) - distanceFromScreen);
-                break;                
-            default:
-                    positionX = 0;
-                    positionY = 0;
-        }
-        
-        // return the new point
-        return new Point(positionX, positionY);
-    }
+	public void setBackgroundImage(final ImageIcon backgroundImage) {
+		this.backgroundImage = backgroundImage;
+	}
 
-    /**
-     * Gets the screen resolution.
-     * @return The screen resolution.
-     */
-    private Rectangle getScreenResolution() {
-        
-        // get the environment
-        GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        
-        // return the bounds
-        return environment.getMaximumWindowBounds();
-    }
-   
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(final Color borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public int getBorderThickness() {
+		return borderThickness;
+	}
+
+	public void setBorderThickness(final int borderThickness) {
+		this.borderThickness = borderThickness;
+	}
+
+	public Color getDescriptionColor() {
+		return descriptionColor;
+	}
+
+	public void setDescriptionColor(final Color descriptionColor) {
+		this.descriptionColor = descriptionColor;
+	}
+
+	public Font getDescriptionFont() {
+		return descriptionFont;
+	}
+
+	public void setDescriptionFont(final Font descriptionFont) {
+		this.descriptionFont = descriptionFont;
+	}
+
+	public ImageIcon getIcon() {
+		return new ImageIcon(getClass().getResource(
+				"/simplicio/" + icon.toString().toLowerCase() + ".png"));
+	}
+
+	public void setIcon(final TelegraphType icon) {
+		this.icon = icon;
+	}
+
+	public Color getTitleColor() {
+		return titleColor;
+	}
+
+	public void setTitleColor(final Color titleColor) {
+		this.titleColor = titleColor;
+	}
+
+	public Font getTitleFont() {
+		return titleFont;
+	}
+
+	public void setTitleFont(final Font titleFont) {
+		this.titleFont = titleFont;
+	}
+
+	/**
+	 * Calculates the initial coordinates.
+	 * 
+	 * @return A point.
+	 */
+	protected Point getInitialCoordinates() {
+
+		// the points
+		int positionX;
+		int positionY;
+
+		// check the option
+		switch (telegraphPosition) {
+		case BOTTOM_CENTER:
+			positionX = (int) (screenWidth / 2 - windowWidth / 2);
+			positionY = (int) (screenHeight + windowHeight);
+			break;
+		case TOP_CENTER:
+			positionX = (int) (screenWidth / 2 - windowWidth / 2);
+			positionY = -windowHeight;
+			break;
+		case TOP_LEFT:
+			positionX = -windowWidth;
+			positionY = -windowHeight;
+			break;
+		case BOTTOM_LEFT:
+			positionX = -windowWidth;
+			positionY = (int) screenHeight;
+			break;
+		case TOP_RIGHT:
+			positionX = (int) screenWidth;
+			positionY = -windowHeight;
+			break;
+		case BOTTOM_RIGHT:
+			positionX = (int) screenWidth;
+			positionY = (int) (screenHeight + windowHeight);
+			break;
+		default:
+			positionX = 0;
+			positionY = 0;
+		}
+
+		// return new point
+		return new Point(positionX, positionY);
+	}
+
+	/**
+	 * Calculates the final coordinates.
+	 * 
+	 * @return The point.
+	 */
+	protected Point getFinalCoordinates() {
+
+		// the points
+		int positionX;
+		int positionY;
+
+		// check the option
+		switch (telegraphPosition) {
+		case BOTTOM_CENTER:
+			positionX = (int) (screenWidth / 2 - windowWidth / 2);
+			positionY = (int) (screenHeight - windowHeight - distanceFromScreen);
+			break;
+		case TOP_CENTER:
+			positionX = (int) (screenWidth / 2 - windowWidth / 2);
+			positionY = distanceFromScreen;
+			break;
+		case TOP_LEFT:
+			positionX = distanceFromScreen;
+			positionY = distanceFromScreen;
+			break;
+		case BOTTOM_LEFT:
+			positionX = distanceFromScreen;
+			positionY = (int) (screenHeight - windowHeight - distanceFromScreen);
+			break;
+		case TOP_RIGHT:
+			positionX = (int) (screenWidth - windowWidth - distanceFromScreen);
+			positionY = distanceFromScreen;
+			break;
+		case BOTTOM_RIGHT:
+			positionX = (int) (screenWidth - windowWidth - distanceFromScreen);
+			positionY = (int) (screenHeight - windowHeight - distanceFromScreen);
+			break;
+		default:
+			positionX = 0;
+			positionY = 0;
+		}
+
+		// return the new point
+		return new Point(positionX, positionY);
+	}
+
+	/**
+	 * Gets the screen resolution.
+	 * 
+	 * @return The screen resolution.
+	 */
+	private Rectangle getScreenResolution() {
+
+		// get the environment
+		final GraphicsEnvironment environment = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+
+		// return the bounds
+		return environment.getMaximumWindowBounds();
+	}
+
 }
