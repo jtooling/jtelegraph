@@ -43,6 +43,7 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 
@@ -97,6 +98,16 @@ public class TelegraphConfig {
 
 	public TelegraphButtonAction getButtonAction() {
 		return buttonAction;
+	}
+
+	private MouseListener globalListener;
+
+	public void setGlobalListener(final MouseListener listener) {
+		globalListener = listener;
+	}
+
+	public MouseListener getGlobalListener() {
+		return globalListener;
 	}
 
 	// Getters and setters

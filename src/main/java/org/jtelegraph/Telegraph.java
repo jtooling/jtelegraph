@@ -233,16 +233,4 @@ public class Telegraph {
 			// dispose it
 			window.dispose();
 	}
-
-	/**
-	 * Adds a custom mouse listener to the window.
-	 * 
-	 * @param ml
-	 *            The mouse listener.
-	 */
-	public void addMouseListener(final MouseListener ml) {
-
-		// add it
-		window.addMouseListener(ml);
-	}
 }

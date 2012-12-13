@@ -15,9 +15,7 @@ public class TestTelegraphQueue {
 		c.enableButton(true);
 		c.setIconProvider(BatchIconProvider.ADDRESS_BOOK);
 		// c.setStopOnMouseOver(true);
-		final Telegraph t = new Telegraph("Test",
-				"Hey! Look at my first test!", c);
-		t.addMouseListener(new MouseListener() {
+		c.setGlobalListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(final MouseEvent e) {
@@ -48,6 +46,8 @@ public class TestTelegraphQueue {
 				System.out.println("Hello there !");
 			}
 		});
+		final Telegraph t = new Telegraph("Test",
+				"Hey! Look at my first test!", c);
 		final Telegraph t2 = new Telegraph("Test2",
 				"Hey! Look at my second test!", c);
 		queue.add(t);

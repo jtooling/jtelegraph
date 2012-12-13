@@ -226,6 +226,10 @@ public class TelegraphWindow extends JWindow {
 
 		// put the window away
 		setBounds(-getWidth(), -getHeight(), getWidth(), getHeight());
+
+		// apply mouselistener from config
+		if (config.getGlobalListener() != null)
+			addMouseListener(config.getGlobalListener());
 	}
 
 	/**
