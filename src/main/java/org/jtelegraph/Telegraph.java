@@ -41,206 +41,208 @@ package org.jtelegraph;
 // needed imports
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import org.pushingpixels.trident.Timeline;
 
 /**
  * Packs the window and the animation configuration. Please dispose the object
  * if you don't add it to a queue.
- *
+ * 
  * @author Paulo Roberto Massa Cereda
  * @version 2.0
  * @since 2.0
  */
 public class Telegraph {
 
-    // the message title
-    private String title;
-    
-    // the message description
-    private String description;
-    
-    // the configuration
-    private TelegraphConfig config;
-    
-    // the actual window
-    private TelegraphWindow window;
-    
-    // the timelines
-    private Timeline timelineIntro;
-    private Timeline timelineStay;
-    private Timeline timelineAway;
+	// the message title
+	private final String title;
 
-    /**
-     * Constructor.
-     *
-     * @param title The telegraph title.
-     * @param description The telegraph description.
-     */
-    public Telegraph(String title, String description) {
+	// the message description
+	private final String description;
 
-        // set both title and description
-        this.title = title;
-        this.description = description;
+	// the configuration
+	private final TelegraphConfig config;
 
-        // create a default configuration
-        config = new TelegraphConfig();
+	// the actual window
+	private TelegraphWindow window;
 
-        // configure it
-        configure();
-    }
+	// the timelines
+	private Timeline timelineIntro;
+	private Timeline timelineStay;
+	private Timeline timelineAway;
 
-    /**
-     * Constructor with configuration options.
-     *
-     * @param title The telegraph title.
-     * @param description The telegraph description.
-     * @param config The configuration.
-     */
-    public Telegraph(String title, String description, TelegraphConfig config) {
+	/**
+	 * Constructor.
+	 * 
+	 * @param title
+	 *            The telegraph title.
+	 * @param description
+	 *            The telegraph description.
+	 */
+	public Telegraph(final String title, final String description) {
 
-        // set everything
-        this.title = title;
-        this.description = description;
-        this.config = config;
+		// set both title and description
+		this.title = title;
+		this.description = description;
 
-        // and configure it
-        configure();
-    }
+		// create a default configuration
+		config = new TelegraphConfig();
 
-    /**
-     * Configures the telegraph.
-     */
-    private void configure() {
+		// configure it
+		configure();
+	}
 
-        // create a new telegraph window
-        window = new TelegraphWindow(title, description, config);
+	/**
+	 * Constructor with configuration options.
+	 * 
+	 * @param title
+	 *            The telegraph title.
+	 * @param description
+	 *            The telegraph description.
+	 * @param config
+	 *            The configuration.
+	 */
+	public Telegraph(final String title, final String description,
+			final TelegraphConfig config) {
 
-        // set the window height and width
-        config.setWindowHeight(window.getHeight());
-        config.setWindowWidth(window.getWidth());
+		// set everything
+		this.title = title;
+		this.description = description;
+		this.config = config;
 
-        // create the three timelines
-        timelineIntro = new Timeline(window);
-        timelineStay = new Timeline(window);
-        timelineAway = new Timeline(window);
+		// and configure it
+		configure();
+	}
 
-        // configure the intro animation, when the window enters
-        timelineIntro.addPropertyToInterpolate("position", config.getInitialCoordinates(), config.getFinalCoordinates());
+	/**
+	 * Configures the telegraph.
+	 */
+	private void configure() {
 
-        // if the window doesn't have a button
-        if (!config.hasEnableButton()) {
-            
-            // if there's a stop on mouse over
-            if (config.hasToStopOnMouseOver()) {
-                
-                // add a new listener
-                window.addMouseListener(new MouseListener() {
+		// create a new telegraph window
+		window = new TelegraphWindow(title, description, config);
 
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                    }
+		// set the window height and width
+		config.setWindowHeight(window.getHeight());
+		config.setWindowWidth(window.getWidth());
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                    }
+		// create the three timelines
+		timelineIntro = new Timeline(window);
+		timelineStay = new Timeline(window);
+		timelineAway = new Timeline(window);
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                    }
+		// configure the intro animation, when the window enters
+		timelineIntro.addPropertyToInterpolate("position",
+				config.getInitialCoordinates(), config.getFinalCoordinates());
 
-                    @Override
-                    public void mouseEntered(MouseEvent e) {
+		// if the window doesn't have a button
+		if (!config.hasEnableButton()) {
 
-                        // if the window is in position
-                        if (timelineIntro.isDone() && !timelineStay.isDone()) {
+			// if there's a stop on mouse over
+			if (config.hasToStopOnMouseOver())
+				// add a new listener
+				window.addMouseListener(new MouseListener() {
 
-                            // suspend animation
-                            timelineStay.suspend();
-                        }
-                    }
+					@Override
+					public void mouseClicked(final MouseEvent e) {
+					}
 
-                    @Override
-                    public void mouseExited(MouseEvent e) {
+					@Override
+					public void mousePressed(final MouseEvent e) {
+					}
 
-                        // window is still in position
-                        if (timelineIntro.isDone() && !timelineStay.isDone()) {
+					@Override
+					public void mouseReleased(final MouseEvent e) {
+					}
 
-                            // resume animation
-                            timelineStay.resume();
-                        }
-                    }
-                });
-            }
+					@Override
+					public void mouseEntered(final MouseEvent e) {
 
-            // add the callback to the main timeline
-            timelineIntro.addCallback(new SimpleCallback(timelineStay));
+						// if the window is in position
+						if (timelineIntro.isDone() && !timelineStay.isDone())
+							// suspend animation
+							timelineStay.suspend();
+					}
 
-            // configure the time the window should wait in the screen
-            timelineStay.setDuration(config.getDuration());
-            timelineStay.addCallback(new SimpleCallback(timelineAway));
+					@Override
+					public void mouseExited(final MouseEvent e) {
 
-        }
+						// window is still in position
+						if (timelineIntro.isDone() && !timelineStay.isDone())
+							// resume animation
+							timelineStay.resume();
+					}
+				});
 
-        // add duration
-        timelineIntro.setDuration(config.getInDuration());
+			// add the callback to the main timeline
+			timelineIntro.addCallback(new SimpleCallback(timelineStay));
 
-        // configure the end animation, when the window goes away
-        timelineAway.addPropertyToInterpolate("position", config.getFinalCoordinates(), config.getInitialCoordinates());
-        timelineAway.setDuration(config.getOutDuration());
-        timelineAway.addCallback(new EndCallback(window));
+			// configure the time the window should wait in the screen
+			timelineStay.setDuration(config.getDuration());
+			timelineStay.addCallback(new SimpleCallback(timelineAway));
 
-        // set the last timeline
-        window.setTimeline(timelineAway);
+		}
 
+		// add duration
+		timelineIntro.setDuration(config.getInDuration());
 
-    }
+		// configure the end animation, when the window goes away
+		timelineAway.addPropertyToInterpolate("position",
+				config.getFinalCoordinates(), config.getInitialCoordinates());
+		timelineAway.setDuration(config.getOutDuration());
+		timelineAway.addCallback(new EndCallback(window));
 
-    /**
-     * Plays the animation.
-     */
-    protected void show() {
-        timelineIntro.play();
-    }
+		// set the last timeline
+		window.setTimeline(timelineAway);
 
-    /**
-     * Checks if the animation is still running.
-     *
-     * @return A boolean which determines if the animation is still running.
-     */
-    protected boolean isRunning() {
+	}
 
-        // if every timeline is done
-        if (timelineIntro.isDone() && timelineStay.isDone() && timelineAway.isDone()) {
+	/**
+	 * Plays the animation.
+	 */
+	protected void show() {
+		timelineIntro.play();
+	}
 
-            // nothing is running, return false
-            return false;
-        }
+	/**
+	 * Checks if the animation is still running.
+	 * 
+	 * @return A boolean which determines if the animation is still running.
+	 */
+	protected boolean isRunning() {
+		if (window != null && window.isDiscarded())
+			return false;
+		// if every timeline is done
+		if (timelineIntro.isDone() && timelineStay.isDone()
+				&& timelineAway.isDone())
+			// nothing is running, return false
+			return false;
 
-        // something is still running, return true
-        return true;
-    }
+		// something is still running, return true
+		return true;
+	}
 
-    /**
-     * Disposes the telegraph window. There's no need of calling this method,
-     * unless you don't add the telegraph to the queue.
-     */
-    public void dispose() {
+	/**
+	 * Disposes the telegraph window. There's no need of calling this method,
+	 * unless you don't add the telegraph to the queue.
+	 */
+	public void dispose() {
 
-        // if there's still an object reference
-        if (window != null) {
+		// if there's still an object reference
+		if (window != null)
+			// dispose it
+			window.dispose();
+	}
 
-            // dispose it
-            window.dispose();
-        }
-    }
+	/**
+	 * Adds a custom mouse listener to the window.
+	 * 
+	 * @param ml
+	 *            The mouse listener.
+	 */
+	public void addMouseListener(final MouseListener ml) {
 
-    /**
-     * Adds a custom mouse listener to the window.
-     * @param ml The mouse listener.
-     */
-    public void addMouseListener(MouseListener ml) {
-        
-        // add it
-        window.addMouseListener(ml);
-    }
+		// add it
+		window.addMouseListener(ml);
+	}
 }

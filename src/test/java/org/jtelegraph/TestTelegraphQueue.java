@@ -12,8 +12,10 @@ public class TestTelegraphQueue {
 		// c.setStopOnMouseOver(true);
 		final Telegraph t = new Telegraph("Test",
 				"Hey! Look at my first test!", c);
+		final Telegraph t2 = new Telegraph("Test2",
+				"Hey! Look at my second test!", c);
 		queue.add(t);
+		queue.add(t2);
 		queue.join();
 	}
-
 }

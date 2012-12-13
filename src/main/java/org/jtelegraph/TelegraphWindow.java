@@ -42,179 +42,203 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 import javax.swing.border.MatteBorder;
+
 import net.miginfocom.swing.MigLayout;
+
 import org.pushingpixels.trident.Timeline;
 
 /**
  * Implements the telegraph window.
- *
+ * 
  * @author Paulo Roberto Massa Cereda
  * @version 2.0
  * @since 2.0
  */
 public class TelegraphWindow extends JWindow {
 
-    // the configuration
-    private TelegraphConfig config;
-    // the title
-    String title;
-    // the description
-    String description;
-    private Timeline timeline;
+	// the configuration
+	private final TelegraphConfig config;
+	// the title
+	String title;
+	// the description
+	String description;
+	private Timeline timeline;
 
-    public void setTimeline(Timeline timeline) {
-        this.timeline = timeline;
-    }
+	public void setTimeline(final Timeline timeline) {
+		this.timeline = timeline;
+	}
 
-    /**
-     * Constructor.
-     * @param theTitle The telegraph title.
-     * @param theDescription The telegraph description.
-     * @param theConfig The configuration.
-     */
-    public TelegraphWindow(String theTitle, String theDescription, TelegraphConfig theConfig) {
-        
-        // instantiate superclass
-        super();
-        
-        // set the attributes
-        title = theTitle;
-        description = theDescription;
-        config = theConfig;
+	private boolean discarded = false;
 
-        // create a new border
-        getRootPane().setBorder(new MatteBorder(config.getBorderThickness(), config.getBorderThickness(), config.getBorderThickness(), config.getBorderThickness(), config.getBorderColor()));
-        
-        // set the layout
-        setLayout(new MigLayout());
+	protected void discard() {
+		discarded = true;
+	}
 
-        // set the background color
-        getRootPane().setBackground(config.getBackgroundColor());
+	public boolean isDiscarded() {
+		return discarded;
+	}
 
-        // if there's a background image
-        if (config.getBackgroundImage() != null) {
-            
-            // create a label with that image
-            JLabel labelBackground = new JLabel(config.getBackgroundImage());
-            
-            // set the bounds
-            labelBackground.setBounds(0, 0, config.getBackgroundImage().getIconWidth(), config.getBackgroundImage().getIconHeight());
-            
-            // add it
-            getLayeredPane().add(labelBackground, new Integer(Integer.MIN_VALUE));
-        }
+	/**
+	 * Constructor.
+	 * 
+	 * @param theTitle
+	 *            The telegraph title.
+	 * @param theDescription
+	 *            The telegraph description.
+	 * @param theConfig
+	 *            The configuration.
+	 */
+	public TelegraphWindow(final String theTitle, final String theDescription,
+			final TelegraphConfig theConfig) {
 
-        // create a new panel
-        JPanel contentPanel = new JPanel();
-        contentPanel.setOpaque(false);
+		// instantiate superclass
+		super();
 
-        // set the new layout
-        contentPanel.setLayout(new MigLayout("ins dialog, gapx 15, hidemode 3", "15[][grow]15", "15[][grow][]15"));
+		// set the attributes
+		title = theTitle;
+		description = theDescription;
+		config = theConfig;
 
-        // create a new icon
-        JLabel icon = new JLabel(config.getIcon());
-        contentPanel.add(icon, "cell 0 0 0 2, align center");
+		// create a new border
+		getRootPane().setBorder(
+				new MatteBorder(config.getBorderThickness(), config
+						.getBorderThickness(), config.getBorderThickness(),
+						config.getBorderThickness(), config.getBorderColor()));
 
-        // create the telegraph title
-        String strTitle = String.format("<html><div style=\"width:%dpx;\">%s</div><html>", 200, title);
-        JLabel lblTitle = new JLabel("<html>" + strTitle + "</html>");
-        
-        // if there's no font
-        if (config.getTitleFont() == null) {
-            
-            // set default
-            lblTitle.setFont(lblTitle.getFont().deriveFont(Font.BOLD, 14f));
-            
-        } else {
-            
-            // set the one from config
-            lblTitle.setFont(config.getTitleFont());
-        }
-        
-        // set the font color
-        lblTitle.setForeground(config.getTitleColor());
+		// set the layout
+		setLayout(new MigLayout());
 
-        // create the telegraph description
-        String strDescription = String.format("<html><div style=\"width:%dpx;\">%s</div><html>", 200, description);
-        JLabel lblDescription = new JLabel(strDescription);
+		// set the background color
+		getRootPane().setBackground(config.getBackgroundColor());
 
-        // if there's font
-        if (config.getDescriptionFont() != null) {
-            
-            // set it
-            lblDescription.setFont(config.getDescriptionFont());
-        }
+		// if there's a background image
+		if (config.getBackgroundImage() != null) {
 
-        // set the description color
-        lblDescription.setForeground(config.getDescriptionColor());
+			// create a label with that image
+			final JLabel labelBackground = new JLabel(
+					config.getBackgroundImage());
 
-        // add both title and description
-        contentPanel.add(lblTitle, "cell 1 0, aligny center");
-        contentPanel.add(lblDescription, "cell 1 1, aligny center, growy, width 260!");
+			// set the bounds
+			labelBackground.setBounds(0, 0, config.getBackgroundImage()
+					.getIconWidth(), config.getBackgroundImage()
+					.getIconHeight());
 
-        // if the button is enabled
-        if (config.hasEnableButton()) {
-            
-            // create a new button
-            final JButton button = new JButton(config.getButtonCaption());
-            
-            // if there's an icon
-            if (config.getButtonIcon() != null) {
-                
-                // add it to the button
-                button.setIcon(config.getButtonIcon());
-            }
-            
-            // add listener
-            button.addActionListener(new ActionListener() {
+			// add it
+			getLayeredPane().add(labelBackground,
+					new Integer(Integer.MIN_VALUE));
+		}
 
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    
-                    // disable the button
-                    button.setEnabled(false);
-                    
-                    // play animation
-                    timeline.play();
-                }
-            });
-            
-            // add the button to the panel
-            contentPanel.add(button, "cell 1 2, align right");
-        }
-        
-        // set content to the window
-        setContentPane(contentPanel);
-        
-        // set the windows always on top
-        setAlwaysOnTop(true);
-        
-        // pack everything
-        pack();
-        
-        // put the window away
-        setBounds(-getWidth(), -getHeight(), getWidth(), getHeight());
-    }
+		// create a new panel
+		final JPanel contentPanel = new JPanel();
+		contentPanel.setOpaque(false);
 
-    /**
-     * Sets position on screen.
-     * @param p The new position.
-     */
-    public void setPosition(Point p) {
-        
-        // if not visible
-        if (!isVisible()) {
-            
-            // show window
-            setVisible(true);
-        }
-        
-        // set new location
-        setBounds(p.x, p.y, getWidth(), getHeight());
-    }
+		// set the new layout
+		contentPanel.setLayout(new MigLayout("ins dialog, gapx 15, hidemode 3",
+				"15[][grow]15", "15[][grow][]15"));
+
+		// create a new icon
+		final JLabel icon = new JLabel(config.getIcon());
+		contentPanel.add(icon, "cell 0 0 0 2, align center");
+
+		// create the telegraph title
+		final String strTitle = String.format(
+				"<html><div style=\"width:%dpx;\">%s</div><html>", 200, title);
+		final JLabel lblTitle = new JLabel("<html>" + strTitle + "</html>");
+
+		// if there's no font
+		if (config.getTitleFont() == null)
+			// set default
+			lblTitle.setFont(lblTitle.getFont().deriveFont(Font.BOLD, 14f));
+		else
+			// set the one from config
+			lblTitle.setFont(config.getTitleFont());
+
+		// set the font color
+		lblTitle.setForeground(config.getTitleColor());
+
+		// create the telegraph description
+		final String strDescription = String.format(
+				"<html><div style=\"width:%dpx;\">%s</div><html>", 200,
+				description);
+		final JLabel lblDescription = new JLabel(strDescription);
+
+		// if there's font
+		if (config.getDescriptionFont() != null)
+			// set it
+			lblDescription.setFont(config.getDescriptionFont());
+
+		// set the description color
+		lblDescription.setForeground(config.getDescriptionColor());
+
+		// add both title and description
+		contentPanel.add(lblTitle, "cell 1 0, aligny center");
+		contentPanel.add(lblDescription,
+				"cell 1 1, aligny center, growy, width 260!");
+
+		// if the button is enabled
+		if (config.hasEnableButton()) {
+
+			// create a new button
+			final JButton button = new JButton(config.getButtonCaption());
+
+			// if there's an icon
+			if (config.getButtonIcon() != null)
+				// add it to the button
+				button.setIcon(config.getButtonIcon());
+
+			// add listener
+			button.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent e) {
+
+					// disable the button
+					button.setEnabled(false);
+
+					// play animation
+
+					timeline.play();
+					TelegraphWindow.this.discard();
+				}
+			});
+
+			// add the button to the panel
+			contentPanel.add(button, "cell 1 2, align right");
+		}
+
+		// set content to the window
+		setContentPane(contentPanel);
+
+		// set the windows always on top
+		setAlwaysOnTop(true);
+
+		// pack everything
+		pack();
+
+		// put the window away
+		setBounds(-getWidth(), -getHeight(), getWidth(), getHeight());
+	}
+
+	/**
+	 * Sets position on screen.
+	 * 
+	 * @param p
+	 *            The new position.
+	 */
+	public void setPosition(final Point p) {
+
+		// if not visible
+		if (!isVisible())
+			// show window
+			setVisible(true);
+
+		// set new location
+		setBounds(p.x, p.y, getWidth(), getHeight());
+	}
 }
