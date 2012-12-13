@@ -31,92 +31,52 @@
  * WAY  OUT  OF  THE USE  OF  THIS  SOFTWARE,  EVEN  IF ADVISED  OF  THE
  * POSSIBILITY OF SUCH DAMAGE.
  * 
- * TelegraphType.java: This class provides mapping for icons.
+ * SimpleCallback.java: This class implements a simple callback for Timeline.
  */
-package net.sf.jtelegraph;
+
+// package definition
+package org.jtelegraph;
+
+// needed imports
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.callback.TimelineCallback;
 
 /**
- * Provides mapping for icons.
+ * Implements a simple callback for Timeline.
+ *
  * @author Paulo Roberto Massa Cereda
  * @version 2.0
  * @since 2.0
  */
-public enum TelegraphType {
-APPLICATION,
-APPLICATION_WARNING,
-CALCULATOR,
-CALENDAR,
-CAMERA,
-CLOCK,
-COFFEE,
-COMPUTER,
-DIRECTION_DOWN,
-DIRECTION_LEFT,
-DIRECTION_RIGHT,
-DIRECTION_UP,
-DISC,
-DISKETTE,
-DOCUMENT,
-DOCUMENT_ADD,
-DOCUMENT_DELETE,
-DOCUMENT_EDIT,
-DOCUMENT_SEARCH,
-DOCUMENT_WARNING,
-FILE,
-FILE_ADD,
-FILE_DELETE,
-FILE_EDIT,
-FILE_SEARCH,
-FILE_WARNING,
-FOLDER,
-FOLDER_ADD,
-FOLDER_DELETE,
-FOLDER_EMPTY,
-FOLDER_SEARCH,
-FOLDER_WARNING,
-HOME,
-LOAD_DOWNLOAD,
-LOAD_UPLOAD,
-MAIL,
-MAIL_DELETE,
-MAIL_RECEIVE,
-MAIL_SEARCH,
-MAIL_SEND,
-MAIL_WARNING,
-MAIL_WRITE,
-MESSAGE,
-NOTIFICATION_ADD,
-NOTIFICATION_DONE,
-NOTIFICATION_ERROR,
-NOTIFICATION_REMOVE,
-NOTIFICATION_WARNING,
-PIECHART,
-PLAYER_FASTFORWARD,
-PLAYER_PAUSE,
-PLAYER_PLAY,
-PLAYER_RECORD,
-PLAYER_REWIND,
-PLAYER_STOP,
-RSS,
-SEARCH,
-SECURITY_KEY,
-SECURITY_KEYANDLOCK,
-SECURITY_LOCK,
-SECURITY_UNLOCK,
-SHOPPINGCART_ADD,
-SHOPPINGCART_CHECKOUT,
-SHOPPINGCART_REMOVE,
-SHOPPINGCART_WARNING,
-STAR_EMPTY,
-STAR_FULL,
-STAR_HALF,
-USER,
-USER_ADD,
-USER_DELETE,
-USER_MANAGE,
-USER_WARNING,
-VOLUME,
-VOLUME_DOWN,
-VOLUME_MUTE,
-VOLUME_UP
+public class SimpleCallback implements TimelineCallback {
+
+    // the next timeline
+    private Timeline nextTimeline;
+
+    /**
+     * Constructor.
+     *
+     * @param next The next timeline.
+     */
+    public SimpleCallback(Timeline next) {
+
+        // set it
+        this.nextTimeline = next;
+    }
+
+    @Override
+    public void onTimelineStateChanged(Timeline.TimelineState ts, Timeline.TimelineState ts1, float f, float f1) {
+
+        // if the current timeline is done
+        if (ts1 == Timeline.TimelineState.DONE) {
+
+            // play next
+            nextTimeline.play();
+        }
+
+    }
+
+    @Override
+    public void onTimelinePulse(float f, float f1) {
+    }
 }

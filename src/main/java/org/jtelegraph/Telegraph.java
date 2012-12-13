@@ -36,7 +36,7 @@
  */
 
 // package definition
-package net.sf.jtelegraph;
+package org.jtelegraph;
 
 // needed imports
 import java.awt.event.MouseEvent;

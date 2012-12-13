@@ -30,52 +30,25 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY
  * WAY  OUT  OF  THE USE  OF  THIS  SOFTWARE,  EVEN  IF ADVISED  OF  THE
  * POSSIBILITY OF SUCH DAMAGE.
- *
- * EndCallback.java: This class implements an end callback for Timeline.
+ * 
+ * TelegraphPosition.java: This enumeration determines the telegraph
+ * position on screen.
  */
 
 // package definition
-package net.sf.jtelegraph;
-
-// needed imports
-import org.pushingpixels.trident.Timeline;
-import org.pushingpixels.trident.callback.TimelineCallback;
+package org.jtelegraph;
 
 /**
- * Implements an end callback for Timeline.
- *
+ * Determines the telegraph position on screen.
  * @author Paulo Roberto Massa Cereda
  * @version 2.0
  * @since 2.0
  */
-public class EndCallback implements TimelineCallback {
-
-    // the telegraph
-    private TelegraphWindow telegraph;
-
-    /**
-     * Constructor.
-     *
-     * @param telegraph The telegraph window.
-     */
-    public EndCallback(TelegraphWindow telegraph) {
-
-        // set it
-        this.telegraph = telegraph;
-    }
-
-    @Override
-    public void onTimelineStateChanged(Timeline.TimelineState ts, Timeline.TimelineState ts1, float f, float f1) {
-
-        // if the timeline is done
-        if (ts1 == Timeline.TimelineState.DONE) {
-
-            // dispose the window
-            telegraph.dispose();
-        }
-    }
-
-    @Override
-    public void onTimelinePulse(float f, float f1) {
-    }
+public enum TelegraphPosition {
+    TOP_CENTER,
+    TOP_LEFT,
+    TOP_RIGHT,
+    BOTTOM_CENTER,
+    BOTTOM_LEFT,
+    BOTTOM_RIGHT
 }
