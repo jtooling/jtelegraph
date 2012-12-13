@@ -42,88 +42,111 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.Queue;
+
 import javax.swing.Timer;
 
 /**
  * Implements a telegraph queue.
+ * 
  * @author Paulo Roberto Massa Cereda
  * @version 2.0
  * @since 2.0
  */
 public class TelegraphQueue implements ActionListener {
 
-    // a queue, a timer and a notification
-    private Queue<Telegraph> queue;
-    private Timer timer;
-    private Telegraph current;
+	// a queue, a timer and a notification
+	private final Queue<Telegraph> queue;
+	private final Timer timer;
+	private Telegraph current;
 
-    /**
-    * Constructor.
-    */
-    public TelegraphQueue() {
-        
-        // set everything
-        queue = new LinkedList<Telegraph>();
-        timer = new Timer(50, this);
-        current = null;
-    }
+	/**
+	 * Constructor.
+	 */
+	public TelegraphQueue() {
 
-    /**
-     * Adds the telegraph to the queue.
-     * @param telegraph The telegraph.
-     */
-    public synchronized void add(Telegraph telegraph) {
-        
-        // check if queue is empty and there is no
-        // current notification
-        if (queue.isEmpty() && (current == null)) {
+		// set everything
+		queue = new LinkedList<Telegraph>();
+		timer = new Timer(100, this);
+		current = null;
+	}
 
-            // show notification
-            current = telegraph;
-            current.show();
-        }
-        else {
-            
-            // there are other notifications, so we need to wait
-            queue.offer(telegraph);
+	/**
+	 * Adds the telegraph to the queue.
+	 * 
+	 * @param telegraph
+	 *            The telegraph.
+	 */
+	public synchronized void add(final Telegraph telegraph) {
 
-            // check if timer is not running
-            if (timer.isRunning() == false) {
+		// check if queue is empty and there is no
+		// current notification
+		if (queue.isEmpty() && current == null) {
 
-                // start the timer
-                timer.start();
-            }
-        }
-    }
+			// show notification
+			current = telegraph;
+			current.show();
+		} else {
 
-    /**
-     * Implements the listener for the queue.
-     * @param e The event.
-     */
-    public void actionPerformed(ActionEvent e) {
+			// there are other notifications, so we need to wait
+			queue.offer(telegraph);
 
-        // there is a current notification going on
-        if (current != null) {
+			// check if timer is not running
+			if (timer.isRunning() == false)
+				// start the timer
+				timer.start();
+		}
+	}
 
-            // check if queue is not empty and there is no
-            // notification running
-            if ((!queue.isEmpty()) && (!current.isRunning())) {
+	/**
+	 * Implements the listener for the queue.
+	 * 
+	 * @param e
+	 *            The event.
+	 */
+	@Override
+	public void actionPerformed(final ActionEvent e) {
 
-                // poll a notification from the queue
-                current = queue.poll();
+		// there is a current notification going on
+		if (current != null)
+			// check if queue is not empty and there is no
+			// notification running
+			if (!queue.isEmpty() && !current.isRunning()) {
 
-                // animate
-                current.show();
-            }
-            else {
+				// poll a notification from the queue
+				current = queue.poll();
 
-                // if the queue is empty
-                if (queue.isEmpty()) {
+				// animate
+				current.show();
+			} else // if the queue is empty
+			if (queue.isEmpty())
+				// stop the timer
+				timer.stop();
+	}
 
-                    // stop the timer
-                    timer.stop();
-                }
-            }
-        }
-    }
+	/**
+	 * This method works like the join() method on a thread. It allows to wait
+	 * for the whole queue to be processed by keeping its thread alive. You can
+	 * use it easily by calling it after adding elements in the queue:
+	 * 
+	 * @code TelegraphQueue q = new TelegraphQueue(); q.add(new
+	 *       Telegraph("title","description"); q.add(new
+	 *       Telegraph("title","description"); q.add(new
+	 *       Telegraph("title","description"); q.join();
+	 * @code
+	 * 
+	 *       Following this example, the 3 telegraphs will be displayed one by
+	 *       one, and the program will end properly at the end of the third
+	 *       telegraph. Without the {@link #join()} method, the programs ends
+	 *       directly after the third add() execution, without displaying
+	 *       properly the telegraphs. Have a look at the unit tests and remove
+	 *       the {@link #join()} call to see the difference.
+	 * 
+	 * @author Antoine Neveux
+	 * @since 2.1
+	 */
+	public synchronized void join() throws InterruptedException {
+		do
+			wait(100);
+		while (current != null && current.isRunning() || !queue.isEmpty());
+	}
 }

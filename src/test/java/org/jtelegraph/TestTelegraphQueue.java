@@ -7,9 +7,13 @@ public class TestTelegraphQueue {
 	@Test
 	public void testDisplayTelegraph() throws Exception {
 		final TelegraphQueue queue = new TelegraphQueue();
-		final Telegraph t = new Telegraph("Test", "Hey! Look at my first test!");
+		final TelegraphConfig c = new TelegraphConfig();
+		c.enableButton(true);
+		// c.setStopOnMouseOver(true);
+		final Telegraph t = new Telegraph("Test",
+				"Hey! Look at my first test!", c);
 		queue.add(t);
-		Thread.sleep(5000);
+		queue.join();
 	}
 
 }
