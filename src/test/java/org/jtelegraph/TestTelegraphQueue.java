@@ -1,5 +1,6 @@
 package org.jtelegraph;
 
+import org.jtelegraph.icons.BatchIconProvider;
 import org.junit.Test;
 
 public class TestTelegraphQueue {

@@ -1,8 +1,10 @@
-package org.jtelegraph;
+package org.jtelegraph.icons;
 
 import java.text.MessageFormat;
 
 import javax.swing.ImageIcon;
+
+import org.jtelegraph.IconProvider;
 
 public enum SimplicioIconProvider implements IconProvider {
 

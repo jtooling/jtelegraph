@@ -46,6 +46,8 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
+import org.jtelegraph.icons.SimplicioIconProvider;
+
 /**
  * Holds the telegraph configuration.
  * 
