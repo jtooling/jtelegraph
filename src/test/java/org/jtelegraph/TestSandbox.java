@@ -33,6 +33,8 @@
  */
 package org.jtelegraph;
 
+import java.awt.Color;
+
 import org.junit.Test;
 
 /**
@@ -57,7 +59,9 @@ public class TestSandbox {
 		final Telegraph t3 = new Telegraph("Test3",
 				"Hey! Look at my third test!");
 		final Telegraph t2 = new Telegraph("Test2",
-				"Hey! Look at my second test!", c);
+				"Hey! Look at my second test!", new TelegraphConfigBuilder()
+						.withBorderColor(Color.RED).withBorderThickness(5)
+						.build());
 		queue.add(t);
 		queue.add(t3);
 		queue.add(t2);
