@@ -90,6 +90,12 @@ public class TelegraphConfig {
 	private int windowWidth;
 	private int windowHeight;
 
+	private ImageIcon icon;
+
+	public void setIcon(final ImageIcon icon) {
+		this.icon = icon;
+	}
+
 	private TelegraphButtonAction buttonAction;
 
 	public void setButtonAction(final TelegraphButtonAction action) {
@@ -271,7 +277,8 @@ public class TelegraphConfig {
 	}
 
 	public ImageIcon getIcon() {
-		return iconProvider.getIcon();
+		return icon == null ? iconProvider != null ? iconProvider.getIcon()
+				: SimplicioIconProvider.MESSAGE.getIcon() : icon;
 	}
 
 	public void setIconProvider(final IconProvider iconProvider) {
