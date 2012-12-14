@@ -20,5 +20,6 @@ You can contact us through our Twitter accounts, [@paulocereda](http://www.twitt
 
 - Paulo Roberto Massa Cereda &nbsp;[![Homepage](http://jachievement.sourceforge.net/images/email.png)](http://cereda.users.sourceforge.net/) &nbsp;[![Twitter](http://jachievement.sourceforge.net/images/twitter.png)](http://www.twitter.com/paulocereda)
 - Antoine Neveux &nbsp;[![Homepage](http://jachievement.sourceforge.net/images/email.png)](http://www.antoineneveux.fr/) &nbsp;[![Twitter](http://jachievement.sourceforge.net/images/twitter.png)](http://www.twitter.com/antoineneveux)
+
 ## Special thanks
 To these two libraries used in the project: [Trident](http://www.pushing-pixels.org/category/trident) and [MigLayout](http://www.miglayout.com/).
