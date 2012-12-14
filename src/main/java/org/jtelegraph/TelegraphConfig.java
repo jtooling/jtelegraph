@@ -44,7 +44,10 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseListener;
+import java.io.BufferedInputStream;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.swing.ImageIcon;
 
 import org.jtelegraph.icons.SimplicioIconProvider;
@@ -91,6 +94,25 @@ public class TelegraphConfig {
 	private int windowHeight;
 
 	private ImageIcon icon;
+
+	private boolean audioEnabled;
+	private AudioInputStream audioInputStream;
+
+	public boolean isAudioEnabled() {
+		return audioEnabled;
+	}
+
+	public void setAudioEnabled(final boolean audioEnabled) {
+		this.audioEnabled = audioEnabled;
+	}
+
+	public AudioInputStream getAudioInputStream() {
+		return audioInputStream;
+	}
+
+	public void setAudioInputStream(final AudioInputStream audioInputStream) {
+		this.audioInputStream = audioInputStream;
+	}
 
 	public void setIcon(final ImageIcon icon) {
 		this.icon = icon;
@@ -222,6 +244,16 @@ public class TelegraphConfig {
 			// set it
 			screenWidth = rect.getWidth();
 			screenHeight = rect.getHeight();
+		}
+
+		audioEnabled = true;
+		try {
+			audioInputStream = AudioSystem
+					.getAudioInputStream(new BufferedInputStream(getClass()
+							.getResourceAsStream("/notify.wav")));
+		} catch (final Exception e) {
+			audioEnabled = false;
+			e.printStackTrace();
 		}
 
 	}

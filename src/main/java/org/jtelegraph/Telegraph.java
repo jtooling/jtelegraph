@@ -42,6 +42,7 @@ package org.jtelegraph;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import org.jtelegraph.audio.AudioCallback;
 import org.pushingpixels.trident.Timeline;
 
 /**
@@ -114,6 +115,10 @@ public class Telegraph {
 		configure();
 	}
 
+	public TelegraphConfig getConfig() {
+		return config;
+	}
+
 	/**
 	 * Configures the telegraph.
 	 */
@@ -134,6 +139,9 @@ public class Telegraph {
 		// configure the intro animation, when the window enters
 		timelineIntro.addPropertyToInterpolate("position",
 				config.getInitialCoordinates(), config.getFinalCoordinates());
+
+		// add the callback to the main timeline
+		timelineIntro.addCallback(new AudioCallback(this, timelineStay));
 
 		// if the window doesn't have a button
 		if (!config.hasEnableButton()) {
@@ -173,9 +181,6 @@ public class Telegraph {
 							timelineStay.resume();
 					}
 				});
-
-			// add the callback to the main timeline
-			timelineIntro.addCallback(new SimpleCallback(timelineStay));
 
 			// configure the time the window should wait in the screen
 			timelineStay.setDuration(config.getDuration());
