@@ -523,7 +523,7 @@ public class TelegraphConfig {
 	 * @param windowWidth
 	 *            {@link #windowWidth}
 	 */
-	protected void setWindowWidth(final int windowWidth) {
+	public void setWindowWidth(final int windowWidth) {
 		this.windowWidth = windowWidth;
 	}
 
@@ -531,7 +531,7 @@ public class TelegraphConfig {
 	 * @param windowHeight
 	 *            {@link #windowHeight}
 	 */
-	protected void setWindowHeight(final int windowHeight) {
+	public void setWindowHeight(final int windowHeight) {
 		this.windowHeight = windowHeight;
 	}
 
