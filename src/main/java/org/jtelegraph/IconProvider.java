@@ -35,6 +35,29 @@ package org.jtelegraph;
 
 import javax.swing.ImageIcon;
 
+import org.jtelegraph.icons.BatchIconProvider;
+import org.jtelegraph.icons.SimplicioIconProvider;
+
+/**
+ * This interface allows to define an {@link IconProvider}. This kind of object
+ * can be used in order to provide icons to the {@link Telegraph} objects. Feel
+ * free to use any implementation of this interface if you'd like to use an
+ * {@link IconProvider} in the configuration.
+ * 
+ * You can find some example of {@link IconProvider} by looking at
+ * {@link BatchIconProvider} or {@link SimplicioIconProvider}.
+ * 
+ * @author Antoine Neveux
+ * @version 2.1
+ * @since 2.1
+ * 
+ */
 public interface IconProvider {
+	/**
+	 * This method allows to get an {@link ImageIcon} object to use in a
+	 * {@link Telegraph} object
+	 * 
+	 * @return The {@link ImageIcon} to display in the {@link Telegraph} window
+	 */
 	public ImageIcon getIcon();
 }

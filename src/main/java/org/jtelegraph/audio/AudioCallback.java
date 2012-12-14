@@ -48,37 +48,43 @@ import org.pushingpixels.trident.callback.TimelineCallback;
  * 
  */
 public class AudioCallback implements TimelineCallback {
-
-	// the achievement
+	/**
+	 * The current {@link Telegraph} object
+	 */
 	private final Telegraph telegraph;
-
-	// the next timeline
+	/**
+	 * The next {@link Timeline} to be called
+	 */
 	private final Timeline nextTimeline;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param telegraph
-	 *            The telegraph.
+	 *            {@link #telegraph}
 	 * @param nextTimeline
-	 *            the timeline to call after playing the sound
+	 *            {@link #nextTimeline}
 	 */
 	public AudioCallback(final Telegraph telegraph, final Timeline nextTimeline) {
-		// set it
 		this.telegraph = telegraph;
 		this.nextTimeline = nextTimeline;
 	}
 
+	/**
+	 * @see TimelineCallback#onTimelineStateChanged(TimelineState,
+	 *      TimelineState, float, float)
+	 */
 	@Override
 	public void onTimelineStateChanged(final TimelineState oldState,
 			final TimelineState newState, final float durationFraction,
 			final float timelinePosition) {
-		// if the current timeline is done
 		if (newState == Timeline.TimelineState.DONE)
-			// play next
 			nextTimeline.play();
 	}
 
+	/**
+	 * @see TimelineCallback#onTimelinePulse(float, float)
+	 */
 	@Override
 	public void onTimelinePulse(final float durationFraction,
 			final float timelinePosition) {
@@ -88,5 +94,4 @@ public class AudioCallback implements TimelineCallback {
 			sound.start();
 		}
 	}
-
 }

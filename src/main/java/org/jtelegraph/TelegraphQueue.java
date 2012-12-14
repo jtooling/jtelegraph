@@ -31,10 +31,8 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-// package definition
 package org.jtelegraph;
 
-// needed imports
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -43,21 +41,32 @@ import java.util.Queue;
 import javax.swing.Timer;
 
 /**
- * Implements a telegraph queue.
+ * Implements a telegraph queue, allows to synchronize the display and execution
+ * of {@link Telegraph} objects
  * 
  * @author Paulo Roberto Massa Cereda
- * @version 2.0
+ * @version 2.1
  * @since 2.0
  */
 public class TelegraphQueue implements ActionListener {
-
-	// a queue, a timer and a notification
+	/**
+	 * The {@link Queue} that'll contain all the {@link Telegraph} objects to be
+	 * displayed, which allows to execute them giving the order thei're
+	 * contributed...
+	 */
 	private final Queue<Telegraph> queue;
+	/**
+	 * The {@link Timer} that'll be used in order to synchronize the display of
+	 * {@link Telegraph} objects
+	 */
 	private final Timer timer;
+	/**
+	 * The current {@link Telegraph} object to be displayed
+	 */
 	private Telegraph current;
 
 	/**
-	 * Constructor.
+	 * Default constructor
 	 */
 	public TelegraphQueue() {
 
@@ -68,55 +77,47 @@ public class TelegraphQueue implements ActionListener {
 	}
 
 	/**
-	 * Adds the telegraph to the queue.
+	 * This method allows to add the {@link Telegraph} object to the
+	 * {@link TelegraphQueue} and will automatically display it as soon as
+	 * possible (after potential existing {@link Telegraph} objects in the
+	 * {@link Queue}).
 	 * 
 	 * @param telegraph
-	 *            The telegraph.
+	 *            {@link Telegraph} object to be displayed...
 	 */
 	public synchronized void add(final Telegraph telegraph) {
-
-		// check if queue is empty and there is no
-		// current notification
+		// If queue is empty & no current notification displayed
 		if (queue.isEmpty() && current == null) {
-
-			// show notification
+			// Show the provided telegraph
 			current = telegraph;
 			current.show();
 		} else {
-
-			// there are other notifications, so we need to wait
+			// Some other notifications are pending... We'll need to wait a
+			// little bit...
 			queue.offer(telegraph);
-
-			// check if timer is not running
+			// If timer's not running... better to start it.
 			if (timer.isRunning() == false)
-				// start the timer
 				timer.start();
 		}
 	}
 
 	/**
-	 * Implements the listener for the queue.
+	 * Listener for the {@link TelegraphQueue} in order to know when displaying
+	 * new {@link Telegraph} objects...
 	 * 
-	 * @param e
-	 *            The event.
+	 * @see ActionListener#actionPerformed(ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent e) {
-
-		// there is a current notification going on
+		// There is a current notification going on
 		if (current != null)
-			// check if queue is not empty and there is no
+			// Check if queue is not empty and there is no
 			// notification running
 			if (!queue.isEmpty() && !current.isRunning()) {
-
-				// poll a notification from the queue
+				// Poll a notification from the queue and show it
 				current = queue.poll();
-
-				// animate
 				current.show();
-			} else // if the queue is empty
-			if (queue.isEmpty())
-				// stop the timer
+			} else if (queue.isEmpty())
 				timer.stop();
 	}
 

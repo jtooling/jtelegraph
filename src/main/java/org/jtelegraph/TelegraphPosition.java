@@ -36,15 +36,11 @@ package org.jtelegraph;
 
 /**
  * Determines the telegraph position on screen.
+ * 
  * @author Paulo Roberto Massa Cereda
- * @version 2.0
+ * @version 2.1
  * @since 2.0
  */
 public enum TelegraphPosition {
-    TOP_CENTER,
-    TOP_LEFT,
-    TOP_RIGHT,
-    BOTTOM_CENTER,
-    BOTTOM_LEFT,
-    BOTTOM_RIGHT
+	TOP_CENTER, TOP_LEFT, TOP_RIGHT, BOTTOM_CENTER, BOTTOM_LEFT, BOTTOM_RIGHT
 }

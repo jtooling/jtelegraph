@@ -33,6 +33,26 @@
  */
 package org.jtelegraph;
 
+/**
+ * This interface allows to define an action to execute while clicking on the
+ * button of a {@link Telegraph} object. It consists in a simple way to ask
+ * JTelegraph to process something while clicking on the button...
+ * 
+ * Please take in consideration that your action is blocking for the other
+ * notifications, so if you'd like to execute something which takes time, please
+ * use threads...
+ * 
+ * @author Antoine Neveux
+ * @version 2.1
+ * @since 2.1
+ * 
+ */
 public interface TelegraphButtonAction {
+	/**
+	 * - Captain Obvious! Please help us understand!
+	 * 
+	 * - Quite easy to solve this one! Just implement something that does
+	 * something!
+	 */
 	public void doSomething();
 }

@@ -35,13 +35,23 @@ package org.jtelegraph;
 
 import org.junit.Test;
 
-public class TestTelegraphQueue {
+/**
+ * This test class allows to store various test cases uses during the
+ * development in order to validate that everything's ok... Nothing really
+ * clean, I know it's not a proper way of testing something... Maybe when I'll
+ * have more time I'll take some time to write tests...
+ * 
+ * @author Antoine Neveux
+ * @since 2.1
+ * @version 2.1
+ */
+public class TestSandbox {
 
 	@Test
-	public void testDisplayTelegraph() throws Exception {
+	public void test1() throws Exception {
 		final TelegraphQueue queue = new TelegraphQueue();
 		final TelegraphConfig c = new TelegraphConfig();
-		c.enableButton(true);
+		c.setButtonEnabled(true);
 		final Telegraph t = new Telegraph("Test",
 				"Hey! Look at my first test!", c);
 		final Telegraph t3 = new Telegraph("Test3",

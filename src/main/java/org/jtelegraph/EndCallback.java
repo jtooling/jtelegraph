@@ -31,48 +31,51 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-// package definition
 package org.jtelegraph;
 
-// needed imports
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallback;
 
 /**
  * Implements an end callback for Timeline.
- *
+ * 
  * @author Paulo Roberto Massa Cereda
- * @version 2.0
+ * @version 2.1
  * @since 2.0
  */
 public class EndCallback implements TimelineCallback {
 
-    // the telegraph
-    private TelegraphWindow telegraph;
+	/**
+	 * The TelegraphWindow to use
+	 */
+	private final TelegraphWindow telegraph;
 
-    /**
-     * Constructor.
-     *
-     * @param telegraph The telegraph window.
-     */
-    public EndCallback(TelegraphWindow telegraph) {
+	/**
+	 * Constructor.
+	 * 
+	 * @param telegraph
+	 *            The telegraph window.
+	 */
+	public EndCallback(final TelegraphWindow telegraph) {
+		this.telegraph = telegraph;
+	}
 
-        // set it
-        this.telegraph = telegraph;
-    }
+	/**
+	 * @see TimelineCallback#onTimelineStateChanged(org.pushingpixels.trident.Timeline.TimelineState,
+	 *      org.pushingpixels.trident.Timeline.TimelineState, float, float)
+	 */
+	@Override
+	public void onTimelineStateChanged(final Timeline.TimelineState ts,
+			final Timeline.TimelineState ts1, final float f, final float f1) {
+		// If the timeline's down, then we dispose the telegraph window
+		if (ts1 == Timeline.TimelineState.DONE)
+			telegraph.dispose();
+	}
 
-    @Override
-    public void onTimelineStateChanged(Timeline.TimelineState ts, Timeline.TimelineState ts1, float f, float f1) {
-
-        // if the timeline is done
-        if (ts1 == Timeline.TimelineState.DONE) {
-
-            // dispose the window
-            telegraph.dispose();
-        }
-    }
-
-    @Override
-    public void onTimelinePulse(float f, float f1) {
-    }
+	/**
+	 * @see TimelineCallback#onTimelinePulse(float, float)
+	 */
+	@Override
+	public void onTimelinePulse(final float f, final float f1) {
+	}
 }

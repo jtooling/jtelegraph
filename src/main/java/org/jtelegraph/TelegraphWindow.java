@@ -31,10 +31,8 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-// package definition
 package org.jtelegraph;
 
-// needed imports
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -54,180 +52,181 @@ import org.pushingpixels.trident.Timeline;
  * Implements the telegraph window.
  * 
  * @author Paulo Roberto Massa Cereda
- * @version 2.0
+ * @version 2.1
  * @since 2.0
  */
 @SuppressWarnings("serial")
 public class TelegraphWindow extends JWindow {
-
-	// the configuration
+	/**
+	 * The {@link TelegraphConfig} configuration to be used by the
+	 * {@link Telegraph} window
+	 */
 	private final TelegraphConfig config;
-	// the title
+	/**
+	 * The title of the {@link Telegraph} object
+	 */
 	String title;
-	// the description
+	/**
+	 * The description of the {@link Telegraph} object
+	 */
 	String description;
+	/**
+	 * The {@link Timeline} to be used for the animation...
+	 */
 	private Timeline timeline;
-
-	public void setTimeline(final Timeline timeline) {
-		this.timeline = timeline;
-	}
-
+	/**
+	 * Defines either the window has been discarded by clicking on the button or
+	 * not...
+	 */
 	private boolean discarded = false;
 
-	protected void discard() {
-		discarded = true;
-	}
-
-	public boolean isDiscarded() {
-		return discarded;
-	}
-
 	/**
-	 * Constructor.
+	 * Default constructor which initializes everything...
 	 * 
 	 * @param theTitle
-	 *            The telegraph title.
+	 *            {@link #title}
 	 * @param theDescription
-	 *            The telegraph description.
+	 *            {@link #description}
 	 * @param theConfig
-	 *            The configuration.
+	 *            {@link #config}
 	 */
 	public TelegraphWindow(final String theTitle, final String theDescription,
 			final TelegraphConfig theConfig) {
-
-		// instantiate superclass
 		super();
-
-		// set the attributes
 		title = theTitle;
 		description = theDescription;
 		config = theConfig;
 
-		// create a new border
+		// Creating borders...
 		getRootPane().setBorder(
 				new MatteBorder(config.getBorderThickness(), config
 						.getBorderThickness(), config.getBorderThickness(),
 						config.getBorderThickness(), config.getBorderColor()));
 
-		// set the layout
+		// Setting layout
 		setLayout(new MigLayout());
 
-		// set the background color
+		// Setting background color
 		getRootPane().setBackground(config.getBackgroundColor());
 
-		// if there's a background image
+		// Setting background image
 		if (config.getBackgroundImage() != null) {
-
-			// create a label with that image
+			// Need to use a label with the image...
 			final JLabel labelBackground = new JLabel(
 					config.getBackgroundImage());
-
-			// set the bounds
+			// Set the bounds
 			labelBackground.setBounds(0, 0, config.getBackgroundImage()
 					.getIconWidth(), config.getBackgroundImage()
 					.getIconHeight());
-
-			// add it
+			// And add it to the panel
 			getLayeredPane().add(labelBackground,
 					new Integer(Integer.MIN_VALUE));
 		}
-
-		// create a new panel
+		// Creating a new Panel
 		final JPanel contentPanel = new JPanel();
 		contentPanel.setOpaque(false);
 
-		// set the new layout
+		// Setting new Layout
 		contentPanel.setLayout(new MigLayout("ins dialog, gapx 15, hidemode 3",
 				"15[][grow]15", "15[][grow][]15"));
 
-		// create a new icon
+		// Creating the icon
 		final JLabel icon = new JLabel(config.getIcon());
 		contentPanel.add(icon, "cell 0 0 0 2, align center");
 
-		// create the telegraph title
+		// Creating the title
 		final String strTitle = String.format(
 				"<html><div style=\"width:%dpx;\">%s</div><html>", 200, title);
 		final JLabel lblTitle = new JLabel("<html>" + strTitle + "</html>");
 
-		// if there's no font
+		// Setting default font if nothing's provided
 		if (config.getTitleFont() == null)
-			// set default
 			lblTitle.setFont(lblTitle.getFont().deriveFont(Font.BOLD, 14f));
 		else
-			// set the one from config
+			// Set the one provided in the configuration
 			lblTitle.setFont(config.getTitleFont());
 
-		// set the font color
+		// Setting font's color
 		lblTitle.setForeground(config.getTitleColor());
 
-		// create the telegraph description
+		// Creating the description
 		final String strDescription = String.format(
 				"<html><div style=\"width:%dpx;\">%s</div><html>", 200,
 				description);
 		final JLabel lblDescription = new JLabel(strDescription);
 
-		// if there's font
+		// If font has been provided in configuration, then set it...
 		if (config.getDescriptionFont() != null)
-			// set it
 			lblDescription.setFont(config.getDescriptionFont());
 
-		// set the description color
+		// Setting the description color
 		lblDescription.setForeground(config.getDescriptionColor());
 
-		// add both title and description
+		// Adding both title and description
 		contentPanel.add(lblTitle, "cell 1 0, aligny center");
 		contentPanel.add(lblDescription,
 				"cell 1 1, aligny center, growy, width 260!");
 
-		// if the button is enabled
-		if (config.hasEnableButton()) {
-
-			// create a new button
+		// If the button is enabled
+		if (config.isButtonEnabled()) {
+			// Create a new button
 			final JButton button = new JButton(config.getButtonCaption());
-
-			// if there's an icon
+			// If there's an icon
 			if (config.getButtonIcon() != null)
-				// add it to the button
+				// Add it to the button
 				button.setIcon(config.getButtonIcon());
-
-			// add listener
+			// Add listener
 			button.addActionListener(new ActionListener() {
-
 				@Override
 				public void actionPerformed(final ActionEvent e) {
-
-					// disable the button
 					button.setEnabled(false);
-
 					if (config.getButtonAction() != null)
 						config.getButtonAction().doSomething();
-
-					// play animation
-
 					timeline.play();
 					TelegraphWindow.this.discard();
 				}
 			});
-
-			// add the button to the panel
+			// Adding the button to the panel
 			contentPanel.add(button, "cell 1 2, align right");
 		}
-
-		// set content to the window
+		// Setting content to the window
 		setContentPane(contentPanel);
 
-		// set the windows always on top
+		// Setting the windows always on top
 		setAlwaysOnTop(true);
 
-		// pack everything
+		// Packing everything
 		pack();
 
-		// put the window away
+		// Putting the window away
 		setBounds(-getWidth(), -getHeight(), getWidth(), getHeight());
 
-		// apply mouselistener from config
+		// Applying mouselistener from config if needed
 		if (config.getGlobalListener() != null)
 			addMouseListener(config.getGlobalListener());
+	}
+
+	/**
+	 * @param timeline
+	 *            {@link #timeline}
+	 */
+	public void setTimeline(final Timeline timeline) {
+		this.timeline = timeline;
+	}
+
+	/**
+	 * @return {@link #discarded}
+	 */
+	public boolean isDiscarded() {
+		return discarded;
+	}
+
+	/**
+	 * Allows to precise that window has been discarded by clicking on the
+	 * button...
+	 */
+	protected void discard() {
+		discarded = true;
 	}
 
 	/**
@@ -237,12 +236,9 @@ public class TelegraphWindow extends JWindow {
 	 *            The new position.
 	 */
 	public void setPosition(final Point p) {
-
-		// if not visible
 		if (!isVisible())
 			// show window
 			setVisible(true);
-
 		// set new location
 		setBounds(p.x, p.y, getWidth(), getHeight());
 	}

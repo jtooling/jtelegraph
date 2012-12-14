@@ -31,10 +31,8 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-// package definition
 package org.jtelegraph;
 
-// needed imports
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -46,107 +44,129 @@ import org.pushingpixels.trident.Timeline;
  * if you don't add it to a queue.
  * 
  * @author Paulo Roberto Massa Cereda
- * @version 2.0
+ * @version 2.1
  * @since 2.0
  */
 public class Telegraph {
-
-	// the message title
+	/**
+	 * The message title
+	 */
 	private final String title;
-
-	// the message description
+	/**
+	 * The message description
+	 */
 	private final String description;
-
-	// the configuration
+	/**
+	 * The {@link TelegraphConfig} configuration object to be used by this
+	 * {@link Telegraph}
+	 */
 	private final TelegraphConfig config;
-
-	// the actual window
+	/**
+	 * The {@link TelegraphWindow} window that will be used to display the
+	 * {@link Telegraph}
+	 */
 	private TelegraphWindow window;
-
-	// the timelines
+	/**
+	 * The intro {@link Timeline} which will be the first to be executed
+	 */
 	private Timeline timelineIntro;
+	/**
+	 * The stay {@link Timeline} which corresponds to the one where the message
+	 * is shown
+	 */
 	private Timeline timelineStay;
+	/**
+	 * The away {@link Timeline} which is the one used while discarding the
+	 * {@link Telegraph}
+	 */
 	private Timeline timelineAway;
 
 	/**
-	 * Constructor.
-	 * 
 	 * @param title
 	 *            The telegraph title.
 	 * @param description
 	 *            The telegraph description.
 	 */
 	public Telegraph(final String title, final String description) {
-
-		// set both title and description
 		this.title = title;
 		this.description = description;
-
-		// create a default configuration
+		// Create and use a default configuration
 		config = new TelegraphConfig();
-
-		// configure it
+		// Use it right now for this object
 		configure();
 	}
 
 	/**
-	 * Constructor with configuration options.
-	 * 
 	 * @param title
 	 *            The telegraph title.
 	 * @param description
 	 *            The telegraph description.
 	 * @param config
-	 *            The configuration.
+	 *            The {@link TelegraphConfig} to be used by this
+	 *            {@link Telegraph} object.
 	 */
 	public Telegraph(final String title, final String description,
 			final TelegraphConfig config) {
-
-		// set everything
 		this.title = title;
 		this.description = description;
 		this.config = config;
-
-		// and configure it
+		// Call the configuration of this object
 		configure();
 	}
 
+	/**
+	 * Allows to get the {@link TelegraphConfig} used by this {@link Telegraph}
+	 * instance
+	 * 
+	 * @return The {@link TelegraphConfig} defined in the {@link #config} field
+	 *         of this object
+	 */
 	public TelegraphConfig getConfig() {
 		return config;
 	}
 
 	/**
-	 * Configures the telegraph.
+	 * Checks if the animation is still running.
+	 * 
+	 * @return true if the animation is still running, false otherwise
+	 */
+	protected boolean isRunning() {
+		// Check if Telegraph window has been disabled by button
+		// Used to fix the bug of blocking button telegraph
+		// Otherwise, check if all the timelines have been executed...
+		return window != null && window.isDiscarded() ? false : !(timelineIntro
+				.isDone() && timelineStay.isDone() && timelineAway.isDone());
+	}
+
+	/**
+	 * Applies the configuration to the current {@link Telegraph} object.
 	 */
 	private void configure() {
-
-		// create a new telegraph window
+		// Create a new telegraph window
 		window = new TelegraphWindow(title, description, config);
 
-		// set the window height and width
+		// Set the window height and width
 		config.setWindowHeight(window.getHeight());
 		config.setWindowWidth(window.getWidth());
 
-		// create the three timelines
+		// Create the three timelines
 		timelineIntro = new Timeline(window);
 		timelineStay = new Timeline(window);
 		timelineAway = new Timeline(window);
 
-		// configure the intro animation, when the window enters
+		// Configure the intro animation, when the window enters
 		timelineIntro.addPropertyToInterpolate("position",
 				config.getInitialCoordinates(), config.getFinalCoordinates());
 
-		// add the callback to the main timeline
+		// Add the callback to the main timeline
 		timelineIntro.addCallback(new AudioCallback(this, timelineStay));
 
-		// if the window doesn't have a button
-		if (!config.hasEnableButton()) {
-
-			// if there's a stop on mouse over
-			if (config.hasToStopOnMouseOver())
-				// add a new listener
+		// If the window doesn't have a button
+		if (!config.isButtonEnabled()) {
+			// If there's a stop on mouse over
+			if (config.isStoppedOnMouseOver())
+				// Add a new listener
 				window.addMouseListener(new MouseListener() {
-
 					@Override
 					public void mouseClicked(final MouseEvent e) {
 					}
@@ -161,41 +181,36 @@ public class Telegraph {
 
 					@Override
 					public void mouseEntered(final MouseEvent e) {
-
-						// if the window is in position
+						// If the window is in position
 						if (timelineIntro.isDone() && !timelineStay.isDone())
-							// suspend animation
+							// Suspend animation
 							timelineStay.suspend();
 					}
 
 					@Override
 					public void mouseExited(final MouseEvent e) {
-
-						// window is still in position
+						// Window is still in position
 						if (timelineIntro.isDone() && !timelineStay.isDone())
-							// resume animation
+							// Resume animation
 							timelineStay.resume();
 					}
 				});
 
-			// configure the time the window should wait in the screen
+			// Configure the time the window should wait in the screen
 			timelineStay.setDuration(config.getDuration());
 			timelineStay.addCallback(new SimpleCallback(timelineAway));
-
 		}
-
-		// add duration
+		// Add duration
 		timelineIntro.setDuration(config.getInDuration());
 
-		// configure the end animation, when the window goes away
+		// Configure the end animation, when the window goes away
 		timelineAway.addPropertyToInterpolate("position",
 				config.getFinalCoordinates(), config.getInitialCoordinates());
 		timelineAway.setDuration(config.getOutDuration());
 		timelineAway.addCallback(new EndCallback(window));
 
-		// set the last timeline
+		// Set the last timeline
 		window.setTimeline(timelineAway);
-
 	}
 
 	/**
@@ -206,32 +221,12 @@ public class Telegraph {
 	}
 
 	/**
-	 * Checks if the animation is still running.
-	 * 
-	 * @return A boolean which determines if the animation is still running.
-	 */
-	protected boolean isRunning() {
-		if (window != null && window.isDiscarded())
-			return false;
-		// if every timeline is done
-		if (timelineIntro.isDone() && timelineStay.isDone()
-				&& timelineAway.isDone())
-			// nothing is running, return false
-			return false;
-
-		// something is still running, return true
-		return true;
-	}
-
-	/**
 	 * Disposes the telegraph window. There's no need of calling this method,
 	 * unless you don't add the telegraph to the queue.
 	 */
 	public void dispose() {
-
-		// if there's still an object reference
+		// If there's still an object reference, dispose it
 		if (window != null)
-			// dispose it
 			window.dispose();
 	}
 }

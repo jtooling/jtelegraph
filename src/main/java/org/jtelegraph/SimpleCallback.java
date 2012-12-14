@@ -31,49 +31,49 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-// package definition
 package org.jtelegraph;
 
-// needed imports
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallback;
 
 /**
  * Implements a simple callback for Timeline.
- *
+ * 
  * @author Paulo Roberto Massa Cereda
- * @version 2.0
+ * @version 2.1
  * @since 2.0
  */
 public class SimpleCallback implements TimelineCallback {
 
-    // the next timeline
-    private Timeline nextTimeline;
+	/**
+	 * The next timeline to display
+	 */
+	private final Timeline nextTimeline;
 
-    /**
-     * Constructor.
-     *
-     * @param next The next timeline.
-     */
-    public SimpleCallback(Timeline next) {
+	/**
+	 * @param next
+	 *            The next timeline to display
+	 */
+	public SimpleCallback(final Timeline next) {
+		nextTimeline = next;
+	}
 
-        // set it
-        this.nextTimeline = next;
-    }
+	/**
+	 * @see TimelineCallback#onTimelineStateChanged(org.pushingpixels.trident.Timeline.TimelineState,
+	 *      org.pushingpixels.trident.Timeline.TimelineState, float, float)
+	 */
+	@Override
+	public void onTimelineStateChanged(final Timeline.TimelineState ts,
+			final Timeline.TimelineState ts1, final float f, final float f1) {
+		// If the current timeline is done then we play the next one...
+		if (ts1 == Timeline.TimelineState.DONE)
+			nextTimeline.play();
+	}
 
-    @Override
-    public void onTimelineStateChanged(Timeline.TimelineState ts, Timeline.TimelineState ts1, float f, float f1) {
-
-        // if the current timeline is done
-        if (ts1 == Timeline.TimelineState.DONE) {
-
-            // play next
-            nextTimeline.play();
-        }
-
-    }
-
-    @Override
-    public void onTimelinePulse(float f, float f1) {
-    }
+	/**
+	 * @see TimelineCallback#onTimelinePulse(float, float)
+	 */
+	@Override
+	public void onTimelinePulse(final float f, final float f1) {
+	}
 }
