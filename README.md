@@ -4,7 +4,7 @@
 
 ![Telegraph](http://jtelegraph.sourceforge.net/screenshots/message.jpg)
 ## Authors
-*JTelegraph* has been created and developed by Paulo Roberto Massa Cereda &nbsp;![Brazil](http://jachievement.sourceforge.net/images/brazil.png).
+*JTelegraph* has been created and developed by Paulo Roberto Massa Cereda &nbsp;![Brazil](http://jachievement.sourceforge.net/images/brazil.png), with some contributions of Antoine Neveux &nbsp;![France](http://jachievement.sourceforge.net/images/france.png).
 ## License
 This library is licensed under the [New BSD License](http://www.opensource.org/licenses/bsd-license.php).
 
@@ -14,7 +14,7 @@ I must point out that this library makes use of the [Simplicio](http://neurovit.
 
 This library also uses the [Batch](http://adamwhitcroft.com/batch/) iconset created by [@adamwhitcroft](https://twitter.com/adamwhitcroft), and released as a free-to-use iconset.
 ## Documentation
-All the technical documentation (destinated to potential contributors) can be found directly in the source code: there's quite a lot of JavaDoc, so understanding the source code shouldn't be a problem. From an user point of view, all the documentation can be found [on the JTelegraph dedicated website](http://cereda.github.com/jtelegraph/). Some advanced documentation can also be found on [our GitHub Wiki](https://github.com/cereda/jtelegraph/wiki).
+All the technical documentation (destinated to potential contributors) can be found directly in the source code: there's quite a lot of JavaDoc, so understanding the source code shouldn't be a problem. From an user point of view, all the documentation can be found [on the JTelegraph dedicated website](http://jtooling.github.com/jtelegraph/). Some advanced documentation can also be found on [our GitHub Wiki](https://github.com/jtooling/jtelegraph/wiki).
 ## Contact us
 You can contact us through our Twitter accounts, [@paulocereda](http://www.twitter.com/paulocereda) and [@antoineneveux](http://www.twitter.com/antoineneveux), but of course there are other ways of reaching us:
 

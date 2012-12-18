@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,14 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph;
+package com.github.jtooling.jtelegraph;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import org.jtelegraph.audio.AudioCallback;
 import org.pushingpixels.trident.Timeline;
+
+import com.github.jtooling.jtelegraph.audio.AudioCallback;
 
 /**
  * Packs the window and the animation configuration. Please dispose the object

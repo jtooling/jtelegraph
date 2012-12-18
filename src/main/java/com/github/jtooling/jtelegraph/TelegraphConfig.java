@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph;
+package com.github.jtooling.jtelegraph;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -45,7 +45,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.swing.ImageIcon;
 
-import org.jtelegraph.icons.SimplicioIconProvider;
+import com.github.jtooling.jtelegraph.icons.SimplicioIconProvider;
 
 /**
  * Holds the telegraph configuration.

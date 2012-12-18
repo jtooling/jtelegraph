@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,33 +31,68 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph;
+package com.github.jtooling.jtelegraph.audio;
 
-import javax.swing.ImageIcon;
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.Timeline.TimelineState;
+import org.pushingpixels.trident.callback.TimelineCallback;
 
-import org.jtelegraph.icons.BatchIconProvider;
-import org.jtelegraph.icons.SimplicioIconProvider;
+import com.github.jtooling.jtelegraph.Telegraph;
 
 /**
- * This interface allows to define an {@link IconProvider}. This kind of object
- * can be used in order to provide icons to the {@link Telegraph} objects. Feel
- * free to use any implementation of this interface if you'd like to use an
- * {@link IconProvider} in the configuration.
- * 
- * You can find some example of {@link IconProvider} by looking at
- * {@link BatchIconProvider} or {@link SimplicioIconProvider}.
+ * This simple callback allows to play a sound notification before calling
+ * another timeline
  * 
  * @author Antoine Neveux
  * @version 2.1
  * @since 2.1
  * 
  */
-public interface IconProvider {
+public class AudioCallback implements TimelineCallback {
 	/**
-	 * This method allows to get an {@link ImageIcon} object to use in a
-	 * {@link Telegraph} object
-	 * 
-	 * @return The {@link ImageIcon} to display in the {@link Telegraph} window
+	 * The current {@link Telegraph} object
 	 */
-	public ImageIcon getIcon();
+	private final Telegraph telegraph;
+	/**
+	 * The next {@link Timeline} to be called
+	 */
+	private final Timeline nextTimeline;
+
+	/**
+	 * Constructor.
+	 * 
+	 * @param telegraph
+	 *            {@link #telegraph}
+	 * @param nextTimeline
+	 *            {@link #nextTimeline}
+	 */
+	public AudioCallback(final Telegraph telegraph, final Timeline nextTimeline) {
+		this.telegraph = telegraph;
+		this.nextTimeline = nextTimeline;
+	}
+
+	/**
+	 * @see TimelineCallback#onTimelineStateChanged(TimelineState,
+	 *      TimelineState, float, float)
+	 */
+	@Override
+	public void onTimelineStateChanged(final TimelineState oldState,
+			final TimelineState newState, final float durationFraction,
+			final float timelinePosition) {
+		if (newState == Timeline.TimelineState.DONE)
+			nextTimeline.play();
+	}
+
+	/**
+	 * @see TimelineCallback#onTimelinePulse(float, float)
+	 */
+	@Override
+	public void onTimelinePulse(final float durationFraction,
+			final float timelinePosition) {
+		if (telegraph.getConfig().isAudioEnabled()) {
+			final TelegraphSound sound = new TelegraphSound(telegraph
+					.getConfig().getAudioInputStream());
+			sound.start();
+		}
+	}
 }

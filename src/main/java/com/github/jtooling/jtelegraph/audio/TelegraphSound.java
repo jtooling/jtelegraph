@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph.audio;
+package com.github.jtooling.jtelegraph.audio;
 
 import java.io.IOException;
 
@@ -43,8 +43,8 @@ import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 
-import org.jtelegraph.Telegraph;
-import org.jtelegraph.TelegraphConfig;
+import com.github.jtooling.jtelegraph.Telegraph;
+import com.github.jtooling.jtelegraph.TelegraphConfig;
 
 /**
  * A simple Thread which allows to play a notification sound. It's called from

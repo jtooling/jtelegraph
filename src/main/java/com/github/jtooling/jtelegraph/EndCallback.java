@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph;
+package com.github.jtooling.jtelegraph;
 
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallback;

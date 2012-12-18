@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,16 +31,49 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-// package definition
-package org.jtelegraph;
+package com.github.jtooling.jtelegraph;
+
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.callback.TimelineCallback;
 
 /**
- * Determines the telegraph position on screen.
+ * Implements a simple callback for Timeline.
  * 
  * @author Paulo Roberto Massa Cereda
  * @version 2.1
  * @since 2.0
  */
-public enum TelegraphPosition {
-	TOP_CENTER, TOP_LEFT, TOP_RIGHT, BOTTOM_CENTER, BOTTOM_LEFT, BOTTOM_RIGHT
+public class SimpleCallback implements TimelineCallback {
+
+	/**
+	 * The next timeline to display
+	 */
+	private final Timeline nextTimeline;
+
+	/**
+	 * @param next
+	 *            The next timeline to display
+	 */
+	public SimpleCallback(final Timeline next) {
+		nextTimeline = next;
+	}
+
+	/**
+	 * @see TimelineCallback#onTimelineStateChanged(org.pushingpixels.trident.Timeline.TimelineState,
+	 *      org.pushingpixels.trident.Timeline.TimelineState, float, float)
+	 */
+	@Override
+	public void onTimelineStateChanged(final Timeline.TimelineState ts,
+			final Timeline.TimelineState ts1, final float f, final float f1) {
+		// If the current timeline is done then we play the next one...
+		if (ts1 == Timeline.TimelineState.DONE)
+			nextTimeline.play();
+	}
+
+	/**
+	 * @see TimelineCallback#onTimelinePulse(float, float)
+	 */
+	@Override
+	public void onTimelinePulse(final float f, final float f1) {
+	}
 }

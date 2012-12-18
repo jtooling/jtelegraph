@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,40 +31,16 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph;
-
-import java.awt.Color;
-
-import org.junit.Test;
+// package definition
+package com.github.jtooling.jtelegraph;
 
 /**
- * This test class allows to store various test cases uses during the
- * development in order to validate that everything's ok... Nothing really
- * clean, I know it's not a proper way of testing something... Maybe when I'll
- * have more time I'll take some time to write tests...
+ * Determines the telegraph position on screen.
  * 
- * @author Antoine Neveux
- * @since 2.1
+ * @author Paulo Roberto Massa Cereda
  * @version 2.1
+ * @since 2.0
  */
-public class TestSandbox {
-
-	@Test
-	public void test1() throws Exception {
-		final TelegraphQueue queue = new TelegraphQueue();
-		final TelegraphConfig c = new TelegraphConfig();
-		c.setButtonEnabled(true);
-		final Telegraph t = new Telegraph("Test",
-				"Hey! Look at my first test!", c);
-		final Telegraph t3 = new Telegraph("Test3",
-				"Hey! Look at my third test!");
-		final Telegraph t2 = new Telegraph("Test2",
-				"Hey! Look at my second test!", new TelegraphConfigBuilder()
-						.withBorderColor(Color.RED).withBorderThickness(5)
-						.build());
-		queue.add(t);
-		queue.add(t3);
-		queue.add(t2);
-		queue.join();
-	}
+public enum TelegraphPosition {
+	TOP_CENTER, TOP_LEFT, TOP_RIGHT, BOTTOM_CENTER, BOTTOM_LEFT, BOTTOM_RIGHT
 }

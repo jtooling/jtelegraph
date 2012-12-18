@@ -2,19 +2,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.jtelegraph</groupId>
+	<groupId>com.github.jtooling</groupId>
 	<artifactId>jtelegraph</artifactId>
 	<version>2.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>JTelegraph</name>
-	<url>http://jtelegraph.sourceforge.net</url>
+	<url>http://jtooling.github.com/jtelegraph/</url>
 	<description>A Java message notification library</description>
 	<inceptionYear>2011</inceptionYear>
 
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/cereda/jtelegraph/issues</url>
+		<url>https://github.com/jtooling/jtelegraph/issues</url>
 	</issueManagement>
 
 	<licenses>
@@ -27,14 +27,14 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:https://github.com/cereda/jtelegraph.git</connection>
-		<developerConnection>scm:git:https://github.com/cereda/jtelegraph.git</developerConnection>
-		<url>https://github.com/cereda/jtelegraph</url>
+		<connection>scm:git:https://github.com/jtooling/jtelegraph.git</connection>
+		<developerConnection>scm:git:https://github.com/jtooling/jtelegraph.git</developerConnection>
+		<url>https://github.com/jtooling/jtelegraph</url>
 	</scm>
 
 	<organization>
-		<name>JTelegraph</name>
-		<url>http://jtelegraph.sourceforge.net</url>
+		<name>JTooling</name>
+		<url>http://jtooling.github.com/</url>
 	</organization>
 
 	<developers>

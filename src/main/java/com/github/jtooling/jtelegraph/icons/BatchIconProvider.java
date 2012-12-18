@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,13 +31,13 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph.icons;
+package com.github.jtooling.jtelegraph.icons;
 
 import java.text.MessageFormat;
 
 import javax.swing.ImageIcon;
 
-import org.jtelegraph.IconProvider;
+import com.github.jtooling.jtelegraph.IconProvider;
 
 /**
  * This implementation of the {@link IconProvider} interface allows to use the

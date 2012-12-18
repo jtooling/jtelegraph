@@ -1,6 +1,6 @@
 /*
  *   JTelegraph -- a Java message notification library
- *   Copyright (c) 2012, Paulo Roberto Massa Cereda
+ *   Copyright (c) 2012, Paulo Roberto Massa Cereda, Antoine Neveux
  *   All rights reserved.
  *
  *   Redistribution and use in source and binary forms, with or without
@@ -31,49 +31,45 @@
  *   WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *   POSSIBILITY OF SUCH DAMAGE.
  */
-package org.jtelegraph;
+package com.github.jtooling.jtelegraph;
 
-import org.pushingpixels.trident.Timeline;
-import org.pushingpixels.trident.callback.TimelineCallback;
+import java.awt.Color;
+
+import org.junit.Test;
+
+import com.github.jtooling.jtelegraph.Telegraph;
+import com.github.jtooling.jtelegraph.TelegraphConfig;
+import com.github.jtooling.jtelegraph.TelegraphConfigBuilder;
+import com.github.jtooling.jtelegraph.TelegraphQueue;
 
 /**
- * Implements a simple callback for Timeline.
+ * This test class allows to store various test cases uses during the
+ * development in order to validate that everything's ok... Nothing really
+ * clean, I know it's not a proper way of testing something... Maybe when I'll
+ * have more time I'll take some time to write tests...
  * 
- * @author Paulo Roberto Massa Cereda
+ * @author Antoine Neveux
+ * @since 2.1
  * @version 2.1
- * @since 2.0
  */
-public class SimpleCallback implements TimelineCallback {
+public class TestSandbox {
 
-	/**
-	 * The next timeline to display
-	 */
-	private final Timeline nextTimeline;
-
-	/**
-	 * @param next
-	 *            The next timeline to display
-	 */
-	public SimpleCallback(final Timeline next) {
-		nextTimeline = next;
-	}
-
-	/**
-	 * @see TimelineCallback#onTimelineStateChanged(org.pushingpixels.trident.Timeline.TimelineState,
-	 *      org.pushingpixels.trident.Timeline.TimelineState, float, float)
-	 */
-	@Override
-	public void onTimelineStateChanged(final Timeline.TimelineState ts,
-			final Timeline.TimelineState ts1, final float f, final float f1) {
-		// If the current timeline is done then we play the next one...
-		if (ts1 == Timeline.TimelineState.DONE)
-			nextTimeline.play();
-	}
-
-	/**
-	 * @see TimelineCallback#onTimelinePulse(float, float)
-	 */
-	@Override
-	public void onTimelinePulse(final float f, final float f1) {
+	@Test
+	public void test1() throws Exception {
+		final TelegraphQueue queue = new TelegraphQueue();
+		final TelegraphConfig c = new TelegraphConfig();
+		c.setButtonEnabled(true);
+		final Telegraph t = new Telegraph("Test",
+				"Hey! Look at my first test!", c);
+		final Telegraph t3 = new Telegraph("Test3",
+				"Hey! Look at my third test!");
+		final Telegraph t2 = new Telegraph("Test2",
+				"Hey! Look at my second test!", new TelegraphConfigBuilder()
+						.withBorderColor(Color.RED).withBorderThickness(5)
+						.build());
+		queue.add(t);
+		queue.add(t3);
+		queue.add(t2);
+		queue.join();
 	}
 }
